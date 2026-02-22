@@ -22,6 +22,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/StudentGateResponse'
 
+    get:
+      tags: [students]
+      operationId: getStudents
+      responses:
+        '200':
+          description: Students list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentGateResponse'
+
   /students/{id}:
     get:
       tags: [students]

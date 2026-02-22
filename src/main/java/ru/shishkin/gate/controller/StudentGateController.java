@@ -50,4 +50,24 @@ public class StudentGateController implements ru.shishkin.gate.api.StudentsApi {
 
         return ResponseEntity.ok(gateResp);
     }
+
+    @Override
+    public ResponseEntity<java.util.List<ru.shishkin.gate.model.StudentGateResponse>> getStudents() {
+
+        java.util.List<ru.shishkin.gate.client.model.StudentDataResponse> dataList =
+                studentsFeignClient.getStudentsFromData();
+
+        java.util.List<ru.shishkin.gate.model.StudentGateResponse> gateList = dataList.stream()
+                .map(d -> {
+                    ru.shishkin.gate.model.StudentGateResponse g =
+                            new ru.shishkin.gate.model.StudentGateResponse();
+                    g.setId(d.getId());
+                    g.setFullName(d.getFullName());
+                    g.setPassport(d.getPassport());
+                    return g;
+                })
+                .toList();
+
+        return ResponseEntity.ok(gateList);
+    }
 }
